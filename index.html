@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
-  
+  <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     :root {
       --bg: #fffaf5;
@@ -271,26 +273,7 @@
       margin-bottom: 1rem;
     }
 
-    /* Footer */
-    footer {
-      background: var(--muted);
-      color: #fff;
-      text-align: center;
-      padding: 1.2rem 0;
-      font-size: 1rem;
-      letter-spacing: .5px;
-    }
-
-    @media (max-width: 768px) {
-      .hero, .about, .contact {
-        text-align: center;
-      }
-      .contact .info-box {
-        margin-top: 2rem;
-      }
-    }
-
-    /* Footer */
+        /* Footer */
     .footer {
     background: var(--muted);
     color: #fffaf5;
@@ -333,15 +316,21 @@
     color: var(--accent);
     }
 
-    .social-link {
-    color: rgba(255,255,255,0.9);
-    text-decoration: none;
-    font-size: 1.05rem;
-    transition: color .3s ease;
+    /* Social icons */
+    .social-icons {
+    margin-top: .5rem;
     }
 
-    .social-link:hover {
+    .social-icons a {
+    color: #fff;
+    font-size: 1.8rem;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-icons a:hover {
     color: var(--accent);
+    transform: translateY(-4px);
     }
 
     .footer-divider {
@@ -367,6 +356,7 @@
         margin-top: 1rem;
     }
     }
+
 
   </style>
 </head>
@@ -513,7 +503,7 @@
             <h5>Jam Operasional</h5>
             <p>Senin - Sabtu: 08.00 - 20.00<br>Minggu: 09.00 - 18.00</p>
             <h5>Kontak</h5>
-            <p>📞 0812-3456-7890<br>📧 bellisca.floristt@gmail.com<br>📸 @bellisca.florist</p>
+            <p>📞 0812-3456-7890<br><i class="fa-solid fa-envelope"></i></i> bellisca.floristt@gmail.com<br><i class="fa-brands fa-instagram"></i> @bellisca.florist</p>
           </div>
         </div>
       </div>
@@ -528,8 +518,7 @@
       <div class="col-md-4 text-center text-md-start">
         <h3 class="footer-brand">Bellisca Florist</h3>
         <p class="footer-desc">
-          Keindahan dalam setiap kelopak — Bellisca Florist hadir untuk
-          menciptakan momen spesial Anda dengan bunga terbaik dan pelayanan penuh cinta.
+          Keindahan dalam setiap kelopak — Bellisca Florist hadir untuk menciptakan momen spesial Anda dengan bunga terbaik dan pelayanan penuh cinta.
         </p>
       </div>
 
@@ -544,25 +533,22 @@
         </ul>
       </div>
 
-      <!-- Contact / Social -->
+      <!-- Social Links -->
       <div class="col-md-4 text-center text-md-end">
         <h5 class="footer-title">Ikuti Kami</h5>
         <div class="social-icons">
-          <a href="#" class="social-link">📸 Instagram</a><br>
-          <a href="#" class="social-link">💬 WhatsApp</a><br>
-          <a href="mailto:belliscaflorist@gmail.com" class="social-link">📧 Email</a>
+          <a href="https://www.instagram.com/bellisca.florist" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://wa.me/6281234567890" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="mailto:belliscaflorist@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
         </div>
       </div>
     </div>
-
     <hr class="footer-divider">
-
     <div class="footer-bottom text-center mt-3">
       <p>© 2025 <strong>Bellisca Florist</strong> — Crafted with Love 💖</p>
     </div>
   </div>
 </footer>
-
 
   <script src="js/bootstrap.bundle.js"></script>
 </body>
