@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Products - Bellisca Florist</title>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Radley:ital@0;1&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #fffaf5;
+      --accent: #cfa86e;
+      --muted: #5d4b3b;
+      --muted-2: #6b5646;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--muted);
+      font-family: "Radley", serif;
+      font-size: 1.1rem;
+    }
+
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand {
+      font-family: "DM Serif Text", serif;
+      font-size: 2rem;
+      color: var(--muted);
+    }
+
+    .nav-link {
+      font-family: "Playfair Display", serif;
+      color: var(--muted) !important;
+      font-size: 1.1rem;
+    }
+
+    .nav-link:hover {
+      color: var(--accent) !important;
+    }
+
+    /* Section */
+    .all-products {
+      padding: 5rem 0;
+    }
+
+    .all-products h2 {
+      font-family: "DM Serif Text", serif;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .filter-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    select {
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 1.05rem;
+      color: var(--muted-2);
+      background: #fff;
+    }
+
+    .card-product {
+      border: none;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .card-product:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-product img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .product-title {
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+
+    .product-price {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    footer {
+      background: var(--muted);
+      color: #fffaf5;
+      text-align: center;
+      padding: 1.2rem 0;
+      font-size: 1rem;
+    }
+
+    .btn-detail {
+  display: inline-block;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 1rem;
+  border-radius: 30px;
+  padding: 0.45rem 1.2rem;
+  background: transparent;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-detail:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(207, 168, 110, 0.3);
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">Bellisca Florist</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">All Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- All Products -->
+  <section class="all-products">
+    <div class="container">
+      <h2>All Products</h2>
+      <p class="text-center text-muted">Temukan berbagai pilihan bunga dan rangkaian terbaik dari Bellisca Florist 🌷</p>
+
+      <!-- Filter -->
+      <div class="filter-container">
+        <label for="category">Pilih Kategori: </label>
+        <select id="category">
+          <option value="all">Semua Produk</option>
+          <option value="fresh">Fresh Flowers</option>
+          <option value="artificial">Artificial Flowers</option>
+          <option value="money">Money Bouquets</option>
+          <option value="snack">Snack Bouquets</option>
+          <option value="fruit">Fruit Bouquets</option>
+          <option value="box">Gift Box</option>
+        </select>
+      </div>
+
+      <!-- Product Grid -->
+    <div class="row g-4" id="product-list">
+      <div class="col-6 col-md-3 product-item" data-category="fresh">
+        <div class="card-product">
+          <img src="image/product1.jpg" alt="Fresh Flowers" />
+          <div class="p-2">
+          <div class="product-info">
+            <div class="product-title">Rangkaian Mawar Classic</div>
+            <div class="product-price">Rp 150.000</div>
+            <a href="product-detail.html" class="btn-detail">Lihat Produk</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 product-item" data-category="snack">
+        <div class="card-product">
+          <img src="image/product1.jpg" alt="Snack Bouquet" />
+          <div class="p-2">
+          <div class="product-info">
+            <div class="product-title">Rangkaian Mawar Classic</div>
+            <div class="product-price">Rp 150.000</div>
+            <a href="product-detail.html" class="btn-detail">Lihat Produk</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 product-item" data-category="money">
+        <div class="card-product">
+          <img src="image/product1.jpg" alt="Money Bouquet" />
+          <div class="p-2">
+          <div class="product-info">
+            <div class="product-title">Rangkaian Mawar Classic</div>
+            <div class="product-price">Rp 150.000</div>
+            <a href="product-detail.html" class="btn-detail">Lihat Produk</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 product-item" data-category="fruit">
+        <div class="card-product">
+          <img src="image/product1.jpg" alt="Fruit Bouquet" />
+          <div class="p-2">
+          <div class="product-info">
+            <div class="product-title">Rangkaian Mawar Classic</div>
+            <div class="product-price">Rp 150.000</div>
+            <a href="product-detail.html" class="btn-detail">Lihat Produk</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+          <div class="col-6 col-md-3 product-item" data-category="box">
+            <div class="card-product">
+              <img src="image/product1.jpg" alt="Gift Box" />
+              <div class="p-2">
+              <div class="product-info">
+                <div class="product-title">Rangkaian Mawar Classic</div>
+                <div class="product-price">Rp 150.000</div>
+                <a href="product-detail.html" class="btn-detail">Lihat Produk</a>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-3 product-item" data-category="artificial">
+            <div class="card-product">
+              <img src="image/product1.jpg" alt="Artificial Flower" />
+              <div class="p-2">
+              <div class="product-info">
+                <div class="product-title">Rangkaian Mawar Classic</div>
+                <div class="product-price">Rp 150.000</div>
+                <a href="product-detail.html" class="btn-detail">Lihat Produk</a>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Copyright by Bellisca Florist
+  </footer>
+
+  <script src="js/bootstrap.bundle.js"></script>
+  
+
+  <script>
+  // Ambil parameter category dari URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedCategory = urlParams.get("category");
+
+  const categorySelect = document.getElementById("category");
+  const products = document.querySelectorAll(".product-item");
+
+  // Kalau ada kategori di URL, set dropdown dan filter otomatis
+  if (selectedCategory) {
+    if (categorySelect) categorySelect.value = selectedCategory;
+    products.forEach((item) => {
+      const cat = item.getAttribute("data-category");
+      item.style.display = selectedCategory === "all" || cat === selectedCategory ? "block" : "none";
+    });
+  }
+
+  // Event filter manual juga tetap bisa
+  if (categorySelect) {
+    categorySelect.addEventListener("change", function () {
+      const selected = this.value;
+      products.forEach((item) => {
+        const cat = item.getAttribute("data-category");
+        item.style.display = selected === "all" || cat === selected ? "block" : "none";
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk - Bellisca Florist</title>
+
+  <!-- Bootstrap & Font -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fffaf5;
+      --accent: #cfa86e;
+      --muted: #5d4b3b;
+      --muted-2: #6b5646;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--muted);
+      font-family: "Radley", serif;
+      font-size: 1.1rem;
+    }
+
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    .navbar-brand {
+      font-family: "DM Serif Text", serif;
+      font-size: 2rem;
+      color: var(--muted);
+    }
+
+    .nav-link {
+      font-family: "Playfair Display", serif;
+      color: var(--muted) !important;
+      font-size: 1.1rem;
+    }
+
+    .nav-link:hover {
+      color: var(--accent) !important;
+    }
+
+    /* Product Detail */
+    .product-detail {
+      padding: 5rem 0;
+    }
+
+    .product-image img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .product-info h1 {
+      font-family: "DM Serif Text", serif;
+      font-size: 2.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .product-desc {
+      color: var(--muted-2);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-buy {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 40px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-buy:hover {
+      background: #b98f56;
+      transform: scale(1.05);
+    }
+
+    .btn-back {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: transparent;
+      border-radius: 40px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      margin-left: 0.5rem;
+    }
+
+    .btn-back:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    footer {
+      background: var(--muted);
+      color: #fffaf5;
+      text-align: center;
+      padding: 1.2rem 0;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .product-info {
+        text-align: center;
+      }
+    }
+
+    /* Tombol WhatsApp */
+.btn-whatsapp {
+  display: inline-block;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+  background: #1ebe5d;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+}
+
+.btn-back {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  border-radius: 40px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  margin-left: 0.5rem;
+}
+
+.btn-back:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Bellisca Florist</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="allproduct.html">All Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Product Detail -->
+  <section class="product-detail">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-md-6 product-image">
+          <img src="image/product1.jpg" alt="Rangkaian Mawar Classic">
+        </div>
+        <div class="col-md-6 product-info">
+          <h1>Rangkaian Mawar Classic</h1>
+          <div class="product-price">Rp 150.000</div>
+          <p class="product-desc">
+            Rangkaian bunga mawar klasik yang dirangkai dengan penuh cinta dan elegansi.
+            Cocok untuk momen spesial seperti ulang tahun, hari jadi, atau ucapan terima kasih.
+            Dibuat dengan bunga mawar segar pilihan yang menampilkan keindahan dan keharuman alami.
+          </p>
+          <div>
+            <a href="https://wa.me/6281234567890?text=Halo%20Bellisca%20Florist!%20Saya%20ingin%20memesan%20Rangkaian%20Mawar%20Classic.%20Apakah%20masih%20tersedia?" 
+              target="_blank" 
+              class="btn-whatsapp">
+              <i class="fa-brands fa-whatsapp me-2"></i>Beli via WhatsApp
+            </a>
+            <a href="allproduct.html" class="btn-back">
+              <i class="fa-solid fa-arrow-left me-2"></i>Kembali
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Copyright by Bellisca Florist
+  </footer>
+
+  <script src="js/bootstrap.bundle.js"></script>
+</body>
+</html>

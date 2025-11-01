@@ -363,23 +363,42 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
-      <a class="navbar-brand" href="#">Bellisca Florist</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Categories</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Bellisca Florist</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+
+        <!-- Dropdown Categories -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+            <li><a class="dropdown-item" href="allproduct.html?category=fresh">Fresh Flowers</a></li>
+            <li><a class="dropdown-item" href="allproduct.html?category=artificial">Artificial Flowers</a></li>
+            <li><a class="dropdown-item" href="allproduct.html?category=money">Money Bouquets</a></li>
+            <li><a class="dropdown-item" href="allproduct.html?category=snack">Snack Bouquets</a></li>
+            <li><a class="dropdown-item" href="allproduct.html?category=fruit">Fruit Bouquets</a></li>
+            <li><a class="dropdown-item" href="allproduct.html?category=box">Bloom / Gift Box</a></li>
+            <li><a class="dropdown-item" href="allproduct.html?category=soap">Soap Flowers</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="allproduct.html?category=all">All Categories</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Hero -->
   <section class="hero">
@@ -391,7 +410,7 @@
           <p>Setiap bunga kami adalah kisah keindahan, cinta, dan perhatian. Jadikan setiap momen Anda lebih bermakna bersama Bellisca Florist.</p>
           <button class="btn btn-accent">Beli Sekarang</button>
         </div>
-        <div class="col-md-5 text-center">
+        <div class="col-md-5 text-center pt-4">
           <img src="image/logo.jpeg" alt="Bellisca Florist">
         </div>
       </div>
@@ -403,7 +422,7 @@
     <div class="container">
       <div class="row align-items-center g-4">
         <div class="col-md-6">
-          <img src="image/about.jpg" alt="About Bellisca Florist">
+          <img src="image/product1.jpg" width="70%" alt="About Bellisca Florist">
         </div>
         <div class="col-md-6">
           <h2>Tentang Kami</h2>
@@ -431,7 +450,7 @@
         <div class="col-6 col-md-3">
           <div class="card-product">
             <img src="image/product1.jpg" alt="Rangkaian Mawar">
-            <div class="p-2"></div>
+            <div class="p-2">
             <div class="product-title">Rangkaian Mawar Classic</div>
             <div class="product-price">Rp 150.000</div>
             <a href="#" class="btn btn-sm btn-outline-secondary mb-3">Lihat</a>
@@ -471,7 +490,7 @@
       </div>
 
       <div class="btn-all">
-        <a href="#" class="btn btn-accent">Lihat Semua Produk</a>
+        <a href="allproduct.html" class="btn btn-accent">Lihat Semua Produk</a>
       </div>
     </div>
   </section>
@@ -543,11 +562,12 @@
     </div>
     <hr class="footer-divider">
     <div class="footer-bottom text-center mt-3">
-      <p>© 2025 <strong>Bellisca Florist</strong> — Nafa Dhea </p>
+      <p>© 2025 Copyright by Bellisca Florist</p>
     </div>
   </div>
 </footer>
 
   <script src="js/bootstrap.bundle.js"></script>
+  
 </body>
 </html>
