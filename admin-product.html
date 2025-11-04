@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Produk - Bellisca Florist Admin</title>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --accent: #cfa86e;
+      --muted: #5d4b3b;
+      --bg: #fffaf5;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Radley', serif;
+      color: var(--muted);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: var(--muted);
+      color: #fff;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 2rem 1rem;
+    }
+
+    .sidebar h4 {
+      font-family: "DM Serif Text", serif;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #fffaf5;
+    }
+
+    .sidebar a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      display: block;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background: var(--accent);
+      color: #fff;
+      transform: translateX(5px);
+    }
+
+    .sidebar .logout {
+      margin-top: auto;
+      color: #ffdddd;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      flex-grow: 1;
+      padding: 2rem;
+    }
+
+    .main-content h3 {
+      font-family: "DM Serif Text", serif;
+      margin-bottom: 1.5rem;
+    }
+
+    .table {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    thead {
+      background: var(--accent);
+      color: #fff;
+      font-family: "Playfair Display", serif;
+    }
+
+    tbody tr:hover {
+      background-color: rgba(207, 168, 110, 0.1);
+    }
+
+    .btn-action {
+      border: none;
+      background: transparent;
+      font-size: 1.2rem;
+      margin: 0 6px;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .btn-action.edit:hover {
+      color: #3a7e3a;
+    }
+
+    .btn-action.delete:hover {
+      color: #b93c3c;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1rem;
+      background: var(--muted);
+      color: #fff;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 1rem 0.5rem;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding-top: 2rem;
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4>Bellisca Admin</h4>
+    <a href="admin-dashboard.html"><i class="fa-solid fa-plus"></i> Tambah Produk</a>
+    <a href="admin-products.html" class="active"><i class="fa-solid fa-list"></i> Daftar Produk</a>
+    <a href="admin-login.html" class="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h3>Daftar Produk</h3>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Foto</th>
+            <th>Nama Produk</th>
+            <th>Kategori</th>
+            <th>Harga</th>
+            <th>Deskripsi</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><img src="image/product1.jpg" alt="Foto Produk" width="60" height="60" style="object-fit:cover; border-radius:8px;"></td>
+            <td>Rangkaian Mawar Classic</td>
+            <td>Fresh Flowers</td>
+            <td>Rp 150.000</td>
+            <td>Rangkaian mawar merah elegan untuk momen spesial Anda.</td>
+            <td>
+              <button class="btn-action edit" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn-action delete" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><img src="image/product1.jpg" alt="Foto Produk" width="60" height="60" style="object-fit:cover; border-radius:8px;"></td>
+            <td>Snack Bouquet Sweet Treats</td>
+            <td>Snack Bouquets</td>
+            <td>Rp 120.000</td>
+            <td>Snack bouquet berisi aneka cokelat dan permen pilihan.</td>
+            <td>
+              <button class="btn-action edit" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn-action delete" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><img src="image/product1.jpg" alt="Foto Produk" width="60" height="60" style="object-fit:cover; border-radius:8px;"></td>
+            <td>Gift Box Premium</td>
+            <td>Gift Box</td>
+            <td>Rp 220.000</td>
+            <td>Kotak bunga premium berisi mawar dan cokelat Ferrero.</td>
+            <td>
+              <button class="btn-action edit" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn-action delete" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>
