@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Manage Products</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <style>
+    body { background: #fffaf5; color: #5d4b3b; font-family: 'Radley', serif; }
+    .card-product { border-radius: 12px; overflow: hidden; }
+    .thumb { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
+    .btn-accent { background: #cfa86e; color: #fff; border: none; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">Bellisca Florist</a>
+      <div>
+        <button id="logoutBtn" class="btn btn-outline-secondary">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <h2 class="mb-4">Tambah Produk</h2>
+
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="card p-3 mb-4">
+          <form id="productForm">
+            <div class="mb-2">
+              <label class="form-label">Nama Produk</label>
+              <input id="name" class="form-control" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Harga (Rp)</label>
+              <input id="price" type="number" class="form-control" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Kategori</label>
+              <input id="category" class="form-control" placeholder="contoh: fresh, box, mini">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Deskripsi</label>
+              <textarea id="desc" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Gambar (URL atau upload)</label>
+              <input id="imageUrl" class="form-control mb-2" placeholder="https://...">
+              <input id="imageFile" type="file" accept="image/*" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <img id="preview" src="" alt="Preview" style="display:none; max-width:100%; border-radius:8px;" />
+            </div>
+
+            <button class="btn btn-accent w-100" type="submit">Tambahkan Produk</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <h4 class="mb-3">Daftar Produk</h4>
+        <div id="productsList" class="row g-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Require admin login
+    if (localStorage.getItem('adminLoggedIn') !== '1') {
+      // redirect to login
+      location.href = '/admin/login.html';
+    }
+
+    const productForm = document.getElementById('productForm');
+    const imageFile = document.getElementById('imageFile');
+    const imageUrl = document.getElementById('imageUrl');
+    const preview = document.getElementById('preview');
+    const productsList = document.getElementById('productsList');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Load products from localStorage
+    function loadProducts() {
+      const arr = JSON.parse(localStorage.getItem('products') || '[]');
+      return arr;
+    }
+
+    function saveProducts(arr) {
+      localStorage.setItem('products', JSON.stringify(arr));
+    }
+
+    function renderProducts() {
+      const arr = loadProducts();
+      productsList.innerHTML = '';
+      if (arr.length === 0) {
+        productsList.innerHTML = '<div class="col-12 text-muted">Belum ada produk. Tambahkan produk dari form di kiri.</div>';
+        return;
+      }
+      arr.forEach((p) => {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-md-6';
+        col.innerHTML = `
+          <div class="card p-3 shadow-sm">
+            <div class="d-flex gap-3">
+              <div style="width:120px; flex:0 0 120px">
+                <img src="${p.image || ''}" class="thumb" alt="${p.name}">
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="mb-1">${p.name}</h5>
+                <div class="text-muted small mb-2">Rp ${Number(p.price).toLocaleString('id-ID')}</div>
+                <div class="mb-2">${p.desc || ''}</div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-outline-danger" data-id="${p.id}" onclick="deleteProduct('${p.id}')">Hapus</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        productsList.appendChild(col);
+      });
+    }
+
+    // handle preview when URL or file provided
+    imageUrl.addEventListener('input', () => {
+      const val = imageUrl.value.trim();
+      if (val) {
+        preview.src = val;
+        preview.style.display = 'block';
+      } else if (!imageFile.files.length) {
+        preview.style.display = 'none';
+        preview.src = '';
+      }
+    });
+
+    imageFile.addEventListener('change', () => {
+      const file = imageFile.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    productForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const price = document.getElementById('price').value.trim();
+      const category = document.getElementById('category').value.trim();
+      const desc = document.getElementById('desc').value.trim();
+
+      const proceedSave = (imageData) => {
+        const arr = loadProducts();
+        const item = {
+          id: 'p_' + Date.now(),
+          name, price: Number(price || 0), category, desc, image: imageData || ''
+        };
+        arr.unshift(item);
+        saveProducts(arr);
+        renderProducts();
+        productForm.reset();
+        preview.style.display = 'none';
+      };
+
+      // If a file is selected, read it as data URL
+      if (imageFile.files && imageFile.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          proceedSave(e.target.result);
+        };
+        reader.readAsDataURL(imageFile.files[0]);
+      } else if (imageUrl.value.trim()) {
+        proceedSave(imageUrl.value.trim());
+      } else {
+        // No image provided
+        proceedSave('');
+      }
+    });
+
+    function deleteProduct(id) {
+      if (!confirm('Hapus produk ini?')) return;
+      const arr = loadProducts().filter(p => p.id !== id);
+      saveProducts(arr);
+      renderProducts();
+    }
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('adminLoggedIn');
+      localStorage.removeItem('adminToken');
+      location.href = '/admin/login.html';
+    });
+
+    // initial render
+    renderProducts();
+  </script>
+</body>
+</html>
