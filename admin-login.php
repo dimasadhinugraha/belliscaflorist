@@ -3,29 +3,30 @@ session_start();
 include "config/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-  $query = $conn->prepare("SELECT * FROM admin WHERE username = ?");
-  $query->bind_param("s", $username);
-  $query->execute();
-  $result = $query->get_result();
+    $sql = "SELECT * FROM admin WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-  if ($result->num_rows > 0) {
-    $admin = $result->fetch_assoc();
+    if ($result->num_rows > 0) {
+        $admin = $result->fetch_assoc();
 
-    // Jika belum pakai hash, cukup bandingkan langsung
-    if ($password === $admin['password']) {
-      $_SESSION['admin_id'] = $admin['id'];
-      $_SESSION['admin_name'] = $admin['nama_lengkap'];
-      header("Location: admin-products.php");
-      exit();
+        // ✅ Verifikasi password bcrypt
+        if (password_verify($password, $admin['password'])) {
+            $_SESSION['admin_id'] = $admin['id'];
+            $_SESSION['admin_name'] = $admin['username'];
+            header("Location: admin-dashboard.php");
+            exit();
+        } else {
+            $error = "Password salah!";
+        }
     } else {
-      $error = "Password salah!";
+        $error = "Username tidak ditemukan!";
     }
-  } else {
-    $error = "Akun tidak ditemukan!";
-  }
 }
 ?>
 
@@ -33,24 +34,87 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Bellisca Florist</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --accent: #cfa86e;
+      --muted: #5d4b3b;
+      --bg: #fffaf5;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Playfair Display', serif;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: "DM Serif Text", serif;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      width: 100%;
+      padding: 0.8rem;
+      font-weight: 600;
+      transition: all .3s ease;
+    }
+
+    .btn-accent:hover {
+      background: #b98f56;
+    }
+
+    .alert {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+  </style>
 </head>
-<body class="bg-light d-flex justify-content-center align-items-center vh-100">
-  <form method="POST" class="p-4 bg-white shadow rounded" style="width: 360px;">
-    <h3 class="text-center mb-4">Admin Login</h3>
-    <?php if (!empty($error)): ?>
+<body>
+  <div class="login-box">
+    <h2>Admin Login</h2>
+
+    <?php if (isset($error)): ?>
       <div class="alert alert-danger"><?= $error ?></div>
     <?php endif; ?>
-    <div class="mb-3">
-      <label>Username</label>
-      <input type="text" name="username" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label>Password</label>
-      <input type="password" name="password" class="form-control" required>
-    </div>
-    <button class="btn btn-warning w-100" type="submit">Login</button>
-  </form>
+
+    <form method="POST">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" id="username" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" id="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-accent mt-3">Login</button>
+    </form>
+  </div>
 </body>
 </html>

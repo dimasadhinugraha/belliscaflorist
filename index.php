@@ -1,0 +1,632 @@
+<?php
+include "config/db.php";
+
+// Ambil 5 produk terbaru dari database
+$sql = "SELECT produk.*, kategori.nama_kategori 
+        FROM produk 
+        INNER JOIN kategori ON produk.kategori_id = kategori.id
+        ORDER BY produk.id DESC 
+        LIMIT 5";
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bellisca Florist</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #fffaf5;
+      --accent: #cfa86e;
+      --muted: #5d4b3b;
+      --muted-2: #6b5646;
+      --light-accent: rgba(207,168,110,0.15);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--muted);
+      font-family: 'Radley', serif;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    .navbar-brand {
+      font-family: "DM Serif Text", serif;
+      color: var(--muted);
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    .nav-link {
+      font-family: 'Playfair Display', serif;
+      color: var(--muted) !important;
+      font-size: 1.1rem;
+      margin-right: 0.4rem;
+      transition: color .3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--accent) !important;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 5rem 0 3rem;
+      background: linear-gradient(to bottom, #fffaf5, #fff);
+    }
+
+    .hero h1 {
+      font-family: "DM Serif Text", serif;
+      font-size: 3.4rem;
+      color: var(--muted);
+    }
+
+    .hero h3 {
+      font-family: "Playfair Display", serif;
+      color: var(--muted-2);
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      color: var(--muted-2);
+      font-size: 1.2rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero img {
+      max-width: 320px;
+      border-radius: 14px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all .3s ease;
+    }
+
+    .btn-accent:hover {
+      background: #b98f56;
+      transform: scale(1.05);
+    }
+
+    /* About */
+    .about {
+      background: var(--light-accent);
+      padding: 5rem 0;
+    }
+
+    .about h2 {
+      font-family: "DM Serif Text", serif;
+      font-size: 2.6rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .about .lead {
+      font-family: 'Radley', serif;
+      font-size: 1.2rem;
+      color: var(--muted-2);
+      margin-bottom: 1rem;
+    }
+
+    .about ul {
+      list-style: none;
+      padding: 0;
+      font-size: 1.15rem;
+    }
+
+    .about li::before {
+      content: "🌸 ";
+    }
+
+    .about img {
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: transform .3s ease;
+    }
+
+    .about img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Products */
+    .products {
+      padding: 5rem 0;
+    }
+
+    .section-title h2 {
+      font-family: "DM Serif Text", serif;
+      color: var(--muted);
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: .5rem;
+    }
+
+    .section-title p {
+      font-family: "Radley", serif;
+      color: var(--muted-2);
+      text-align: center;
+      font-size: 1.15rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .card-product {
+      border: none;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+      transition: all .3s ease;
+    }
+
+    .card-product:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    .card-product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product-title {
+      font-family: "Playfair Display", serif;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: .75rem;
+    }
+
+    .product-price {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: .75rem;
+    }
+
+    .btn-outline-secondary {
+      border-color: var(--accent);
+      color: var(--accent);
+      font-size: 1rem;
+      padding: .4rem 1rem;
+      border-radius: 30px;
+    }
+
+    .btn-outline-secondary:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-all {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    /* Contact Us */
+    .contact {
+      background: var(--light-accent);
+      padding: 5rem 0;
+    }
+
+    .contact h2 {
+      font-family: "DM Serif Text", serif;
+      font-size: 2.5rem;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .contact p {
+      font-family: 'Radley', serif;
+      color: var(--muted-2);
+      text-align: center;
+      font-size: 1.15rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact form input,
+    .contact form textarea {
+      border-radius: 8px;
+      border: 1px solid rgba(93,75,59,0.25);
+      padding: 0.75rem 1rem;
+      font-size: 1.05rem;
+      width: 100%;
+      color: var(--muted);
+    }
+
+    .contact form textarea {
+      height: 150px;
+      resize: none;
+    }
+
+    .contact .info-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      font-size: 1.1rem;
+    }
+
+    .contact .info-box h5 {
+      font-family: 'Playfair Display', serif;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+
+    .contact .info-box p {
+      color: var(--muted-2);
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--muted);
+      color: #fffaf5;
+      padding: 4rem 0 2rem;
+      font-family: 'Radley', serif;
+    }
+
+    .footer-brand {
+      font-family: 'DM Serif Text', serif;
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: .75rem;
+    }
+
+    .footer-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+
+    .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: .75rem;
+    }
+
+    .footer-links li {
+      margin-bottom: .35rem;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color .3s ease;
+      font-size: 1.05rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .social-icons {
+      margin-top: .5rem;
+    }
+
+    .social-icons a {
+      color: #fff;
+      font-size: 1.8rem;
+      margin: 0 10px;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .footer-divider {
+      border-color: rgba(255,255,255,0.2);
+      margin-top: 2rem;
+    }
+
+    .footer-bottom p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      margin: 0;
+      letter-spacing: 0.3px;
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        text-align: center;
+      }
+      .footer-brand {
+        margin-bottom: 1rem;
+      }
+      .footer-links, .social-icons {
+        margin-top: 1rem;
+      }
+    }
+
+    /* === Modern How To Order === */
+    .howtoorder {
+      background: linear-gradient(180deg, #fffaf5 0%, #fff 100%);
+    }
+    .order-step-modern {
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem 1.2rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      transition: all .3s ease;
+      height: 100%;
+    }
+    .order-step-modern:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .order-step-modern h5 {
+      font-family: "Playfair Display", serif;
+      color: #5d4b3b;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .order-step-modern p {
+      color: #6b5646;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+    .step-icon {
+      width: 75px;
+      height: 75px;
+      margin: 0 auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      color: #fff;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      transition: transform .3s ease;
+    }
+    .order-step-modern:hover .step-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .bg-gradient-pink { background: linear-gradient(135deg, #ffb6c1, #ff7eb3); }
+    .bg-gradient-gold { background: linear-gradient(135deg, #d2a679, #f1c27d); }
+    .bg-gradient-green { background: linear-gradient(135deg, #25d366, #75d48b); }
+    .bg-gradient-brown { background: linear-gradient(135deg, #cfa86e, #a2774c); }
+
+    @media (max-width: 768px) {
+      .order-step-modern {
+        padding: 1.5rem 1rem;
+      }
+      .step-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.php">Bellisca Florist</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="allproduct.php">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-7">
+        <h1>Bellisca Florist</h1>
+        <h3>Bringing joy, one bouquet at a time 🌷</h3>
+        <p>Setiap bunga kami adalah kisah keindahan, cinta, dan perhatian. Jadikan setiap momen Anda lebih bermakna bersama Bellisca Florist.</p>
+        <a href="allproduct.php" class="btn btn-accent">Beli Sekarang</a>
+      </div>
+      <div class="col-md-5 text-center pt-4">
+        <img src="image/logo.jpeg" alt="Bellisca Florist">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-md-6"><img src="image/product1.jpg" width="70%" alt="About Bellisca Florist"></div>
+      <div class="col-md-6">
+        <h2>About Us</h2>
+        <p class="lead">Bellisca Florist menghadirkan keindahan melalui bunga segar, desain eksklusif, dan pelayanan yang hangat untuk setiap pelanggan.</p>
+        <ul>
+          <li>Desain bunga custom & personal</li>
+          <li>Bahan berkualitas & tahan lama</li>
+          <li>Pengiriman cepat & aman</li>
+        </ul>
+        <a href="allproduct.php" class="btn btn-accent">Lihat Produk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="products">
+  <div class="container-fluid">
+    <div class="section-title">
+      <h2>Our Products</h2>
+      <p>Pilihan rangkaian terbaik untuk setiap momen</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <?php if ($result->num_rows > 0): ?>
+        <?php while ($row = $result->fetch_assoc()): ?>
+          <div class="col-6 col-md-2">
+            <div class="card-product">
+              <img src="<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nama_produk']) ?>">
+              <div class="p-2">
+                <div class="product-title"><?= htmlspecialchars($row['nama_produk']) ?></div>
+                <div class="product-price">Rp <?= number_format($row['harga'], 0, ',', '.') ?></div>
+                <a href="product-detail.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-secondary mb-3">Lihat</a>
+              </div>
+            </div>
+          </div>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <p class="text-center text-muted">Belum ada produk yang tersedia.</p>
+      <?php endif; ?>
+    </div>
+
+    <div class="btn-all">
+      <a href="allproduct.php" class="btn btn-accent">Lihat Semua Produk</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact & Footer tetap sama dengan HTML sebelumnya -->
+ <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>Kami siap membantu Anda — kirimkan pesan atau hubungi kami untuk pemesanan dan konsultasi bunga spesial Anda 💐</p>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <form>
+            <div class="mb-3"><input type="text" placeholder="Nama Lengkap" required></div>
+            <div class="mb-3"><input type="email" placeholder="Email Anda" required></div>
+            <div class="mb-3"><textarea placeholder="Pesan Anda..." required></textarea></div>
+            <button class="btn btn-accent w-100">Kirim Pesan</button>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <h5>Alamat Toko</h5>
+            <p>Rawa Belong Jakarta Barat</p>
+            <h5>Kontak</h5>
+            <p>📞 0812-3456-7890<br>
+              <i class="fa-solid fa-envelope"></i> belliscaflorist@gmail.com<br>
+              <i class="fa-brands fa-instagram"></i> @bellisca.florist</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How To Order -->
+  <section class="howtoorder py-5" id="howtoorder">
+    <div class="container text-center">
+      <h1 class="fw-bold mb-3" style="font-family: 'DM Serif Text', serif; color: #5d4b3b;">How to Order</h1>
+      <p class="mb-5" style="max-width: 720px; margin: 0 auto; color: #6b5646;">
+        Pesan bunga impian Anda dengan langkah mudah — pilih desain favorit, custom sesuai selera, dan pesan langsung via WhatsApp 🌸
+      </p>
+
+      <div class="row justify-content-center g-4">
+        <div class="col-md-3 col-6">
+          <div class="order-step-modern">
+            <div class="step-icon bg-gradient-pink"><i class="fa-solid fa-bag-shopping"></i></div>
+            <h5>Pilih Produk</h5>
+            <p>Telusuri koleksi bunga kami atau pilih paket custom sesuai keinginan Anda.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="order-step-modern">
+            <div class="step-icon bg-gradient-gold"><i class="fa-solid fa-pen-nib"></i></div>
+            <h5>Custom Order</h5>
+            <p>Tentukan warna, jenis bunga, dan bentuk rangkaian — kami bantu wujudkan ide Anda.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="order-step-modern">
+            <div class="step-icon bg-gradient-green"><i class="fa-brands fa-whatsapp"></i></div>
+            <h5>Hubungi Kami</h5>
+            <p>Klik tombol WhatsApp untuk konsultasi langsung dan konfirmasi pesanan Anda.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="order-step-modern">
+            <div class="step-icon bg-gradient-brown"><i class="fa-solid fa-truck"></i></div>
+            <h5>Pengiriman</h5>
+            <p>Bunga dikirim cepat & aman ke alamat Anda, siap memperindah momen spesial 🌷</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <a href="https://wa.me/6281234567890?text=Halo%20Bellisca%20Florist!%20Saya%20ingin%20memesan%20atau%20custom%20bunga.%20Bisa%20dibantu%20ya%20😊"
+           target="_blank" class="btn btn-accent px-4 py-2 fs-5">
+          Pesan / Custom via WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+ <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-md-4 text-center text-md-start">
+          <h3 class="footer-brand">Bellisca Florist</h3>
+          <p class="footer-desc">
+            Keindahan dalam setiap kelopak — Bellisca Florist hadir untuk menciptakan momen spesial Anda dengan bunga terbaik dan pelayanan penuh cinta.
+          </p>
+        </div>
+        <div class="col-md-4 text-center">
+          <h5 class="footer-title">Navigation</h5>
+          <ul class="footer-links list-unstyled">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 text-center text-md-end">
+          <h5 class="footer-title">Ikuti Kami</h5>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/bellisca.florist" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/6281234567890" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="mailto:belliscaflorist@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-bottom text-center mt-3">
+        <p>© 2025 Copyright by Bellisca Florist</p>
+      </div>
+    </div>
+  </footer>
+
+<script src="js/bootstrap.bundle.js"></script>
+</body>
+</html>
