@@ -1,16 +1,16 @@
 <?php
 session_start();
-include "config/db.php";
+include "../config/db.php";
 
 // 🔒 Cek login admin
 if (!isset($_SESSION['admin_id'])) {
-  header("Location: admin-login.php");
+  header("Location: login.php");
   exit();
 }
 
 // Cek apakah ada parameter id
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-  header("Location: admin-products.php");
+  header("Location: products.php");
   exit();
 }
 
@@ -24,7 +24,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows == 0) {
-  header("Location: admin-products.php?error=notfound");
+  header("Location: products.php?error=notfound");
   exit();
 }
 
@@ -41,10 +41,10 @@ if ($stmt->execute()) {
     unlink($produk['foto']);
   }
 
-  header("Location: admin-products.php?deleted=1");
+  header("Location: products.php?deleted=1");
   exit();
 } else {
-  header("Location: admin-products.php?error=1");
+  header("Location: products.php?error=1");
   exit();
 }
 ?>
